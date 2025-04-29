@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure of Cheems (AOC) - The Ultimate Meme Adventure!</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Pixel Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Global Styles */
+        :root {
+            --game-primary: #fbbf24;
+            --game-secondary: #4361ee;
+            --game-dark: #161616;
+            --game-accent: #ef4444;
+            --pixel-border: #80ffff;
+        }
+
+        /* Pixel art font */
+        @font-face {
+            font-family: 'PixelFont';
+            src: url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        }
+
+        html {
+            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--game-dark);
+            background-image: url('static/images/aoc/background img.png');
+            background-attachment: fixed;
+            background-size: cover;
+            color: white;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(-5deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(15px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .floating-heart {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.9;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-heart:nth-child(2) {
+            animation-delay: 2s;
+            animation-duration: 9s;
+        }
+
+        .floating-heart:nth-child(3) {
+            animation-delay: 4s;
+            animation-duration: 10s;
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-title {
+            font-weight: bold;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(to right, var(--game-primary), var(--game-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .btn-cta {
+            background-color: var(--game-accent);
+            border: none;
+            padding: 0.8rem 2rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 64, 129, 0.3);
+        }
+
+        /* Features Section */
+        .features-section {
+            background-color: var(--bs-dark);
+            padding: 5rem 0;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            background-color: var(--game-dark);
+            padding: 5rem 0;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5rem 0;
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.1rem 0.05rem;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--game-secondary);
+            color: white;
+            box-shadow: 0 0 0 0.25rem rgba(3, 218, 198, 0.25);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--game-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 3rem 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--game-primary);
+            transform: translateY(-5px);
+        }
+
+        /* Navbar */
+        .navbar {
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(18, 18, 18, 0.95) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--game-secondary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+
+        /* Pixel Art Styles */
+        .pixel-border {
+            border: 4px solid;
+            border-image-slice: 2;
+            border-image-width: 2;
+            border-image-outset: 0;
+            border-image-source: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6"><path d="M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z" fill="white" /></svg>');
+            border-image-repeat: space;
+            padding: 20px;
+            image-rendering: pixelated;
+        }
+
+        .pixel-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--pixel-border);
+            padding: 20px;
+            box-shadow: 0 0 0 3px #000;
+            image-rendering: pixelated;
+        }
+
+        .pixel-text {
+            font-family: 'Press Start 2P', monospace;
+            letter-spacing: 1px;
+            line-height: 1.5;
+        }
+
+        .pixel-text-green {
+            color: #4ade80;
+        }
+
+        .pixel-text-blue {
+            color: #3b82f6;
+        }
+
+        .pixel-text-red {
+            color: #ef4444;
+        }
+
+        .pixel-text-yellow {
+            color: #fbbf24;
+        }
+
+        .pixel-btn {
+            font-family: 'Press Start 2P', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 3px solid #fff;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.7);
+            margin-bottom: 4px;
+        }
+
+        .pixel-btn:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.7);
+        }
+
+        .pixel-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        .game-card {
+            background-color: #0061ca;
+            border: 3px solid #fff;
+            border-radius: 4px;
+            padding: 5px;
+            margin: 5px;
+            text-align: center;
+        }
+
+        .game-card img {
+            image-rendering: pixelated;
+            object-fit: cover;
+            border: 2px solid #000;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .pixel-text {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background animation -->
+    <img src="static/images/aoc/dil.png" alt="Heart" class="floating-heart" style="width: 80px; top: 15%; left: 10%;">
+    <img src="static/images/aoc/dil.png" alt="Heart" class="floating-heart" style="width: 60px; top: 35%; right: 15%;">
+    <img src="static/images/aoc/dil.png" alt="Heart" class="floating-heart" style="width: 100px; bottom: 20%; left: 20%;">
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <span class="pixel-text text-white">AOC</span>
+            </a>
+            
+            <button class="navbar-toggler pixel-border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    </ul>
+                
+                
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section d-flex align-items-center">
+            <div class="container text-center">
+                <div class="row align-items-center min-vh-100 justify-content-center">
+                    <div class="col-lg-10 hero-content">
+                        <h1 class="text-white display-1 mb-3 pixel-text">AOC</h1>
+                        
+                        <div class="mb-4 text-center">
+                            <img src="static/images/aoc/Studio logo.png" class="img-fluid" alt="Cheems Dog with Controller" style="max-width: 200px;">
+                        </div>
+                        
+                        <div class="mb-5 text-center">
+                            <img src="static/images/aoc/Cheems.png" alt="Cheems Character" class="img-fluid" style="max-height: 200px;">
+                        </div>
+                        
+                        <p class="lead mb-5 pixel-text">
+                            JOIN <span class="pixel-text-yellow">CHEEMS</span> ON THE ULTIMATE<br>
+                            MEME <span class="pixel-text-red">ADVENTURE</span>!<br>
+                            "<span class="pixel-text-yellow">PLAY</span>, <span class="pixel-text-red">COLLECT</span>, <span class="pixel-text-green">EARN</span>, AND <span class="pixel-text-blue">RULE</span><br>
+                            THE <span class="pixel-text-blue">LEADERBOARD</span>!"
+                        </p>
+                        
+                        <p class="mb-5 pixel-text text-info">
+                            ADVENTURE, MEMES AND<br>
+                            REWARDS AWAIT
+                        </p>
+                        
+                        <div class="d-flex flex-wrap gap-3 justify-content-center mb-5">
+                            <a href="static/apk/AdventureOfCheems.apk" class="text-decoration-none text-white" download>
+                                <img src="static/images/aoc/Download btn.png" class="img-fluid" alt="Download" style="max-width: 200px;">
+                            </a>
+                        </div>
+                        
+                        <p class="mb-5 pixel-text">LETS GO!</p>
+                        
+                        <p class="mt-4 pixel-text" style="font-size: 18px;">
+                            ADVENTURE OF <span class="pixel-text-yellow">CHEEMS</span> (AOC) IS A FAST-PACED 2D<br>
+                            PLATFORMER PACKED WITH <span class="pixel-text-blue">MEMES</span>, <span class="pixel-text-red">MISSIONS</span>, AND <span class="pixel-text-green">MADNESS</span>!<br><br>
+                            
+                            GUIDE <span class="pixel-text-yellow">CHEEMS</span> THROUGH EXCITING<br>
+                            LEVELS, COLLECT <span class="pixel-text-green">DOGE COINS</span>, AND CLIMB THE <span class="pixel-text-blue">LEADERBOARD</span>.<br><br>
+                            
+                            THE TOP OF THE <span class="pixel-text-red">GLOBAL</span> LEADERBOARD AWAITS!<br><br>
+                            
+                            IMAGINE, EVERY <span class="pixel-text-yellow">JUMP</span>, EVERY <span class="pixel-text-blue">COIN</span> COLLECTED, AND EVERY <span class="pixel-text-green">WIN</span><br>
+                            BRINGS YOU CLOSER TO MEME <span class="pixel-text-red">SUPREMACY</span>.<br><br>
+                            
+                            ARE YOU READY TO MAKE <span class="pixel-text-yellow">CHEEMS</span> PROUD AND BECOME A <span class="pixel-text-red">MEME<br>
+                            MASTER</span>?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section - Empty section maintained for navigation -->
+        <section id="features" class="features-section py-5">
+            <div class="container">
+                <!-- Empty features section since we're not using it anymore -->
+            </div>
+        </section>
+        
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery-section py-5">
+            <div class="container">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="pixel-text mb-4">GAME SCREENSHOTS</h2>
+                        <p class="pixel-text text-muted mb-4" style="font-size: 12px;">ADVENTURE OF CHEEMS IN ACTION</p>
+                    </div>
+                </div>
+                
+                <!-- Horizontal scrollable gallery -->
+                <div class="pixel-border p-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex flex-nowrap overflow-auto pb-3" style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+                                
+                                <!-- Screenshot 1 - Space Level -->
+                                <div class="me-3" style="min-width: 400px; scroll-snap-align: start;">
+                                    <div class="pixel-box p-2">
+                                        <img src="static/images/aoc/img5.png" alt="Space level" class="img-fluid" style="width: 100%; image-rendering: pixelated;">
+                                    </div>
+                                </div>
+                                
+                                <!-- Screenshot 2 - Forest Level -->
+                                <div class="me-3" style="min-width: 256px; scroll-snap-align: start;">
+                                    <div class="pixel-box p-2">
+                                        <img src="static/images/aoc/img2.png" alt="Forest level" class="img-fluid" style="width: 100%; image-rendering: pixelated;">
+                                    </div>
+                                </div>
+                                
+                                <!-- Screenshot 3 - Night Level -->
+                                <div class="me-3" style="min-width: 350px; scroll-snap-align: start;">
+                                    <div class="pixel-box p-2">
+                                        <img src="static/images/aoc/img6.png" alt="Night level" class="img-fluid" style="width: 100%; image-rendering: pixelated;">
+                                    </div>
+                                </div>
+                                
+                                <!-- Screenshot 5 - Powerups/Shop -->
+                                <div class="me-3" style="min-width: 380px; scroll-snap-align: start;">
+                                    <div class="pixel-box p-2">
+                                        <img src="static/images/aoc/img4.png" alt="Powerups" class="img-fluid" style="width: 100%; image-rendering: pixelated;">
+                                    </div>
+                                </div>
+                                
+                                <!-- Screenshot 6 - Collectibles -->
+                                <div class="me-3" style="min-width: 300px; scroll-snap-align: start;">
+                                    <div class="pixel-box p-2">
+                                        <img src="static/images/aoc/img1.png" alt="Collectibles" class="img-fluid" style="width: 100%; image-rendering: pixelated;">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Scroll indicator -->
+
+                    <div class="text-center mt-3">
+                        <p class="pixel-text" style="font-size: 8px;">← SCROLL TO SEE MORE →</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Download Section (Newsletter) -->
+        <section id="newsletter" class="newsletter-section py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="pixel-text mb-4">DOWNLOAD NOW</h2>
+                        <p class="pixel-text mb-5" style="font-size: 20px;">GET READY TO JOIN CHEEMS ON AN EPIC ADVENTURE</p>
+                        
+                        <div class="pixel-border p-4 animate-on-scroll">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mb-4">
+                                    <div class="pixel-box p-3 text-center">
+                                        <div class="d-grid">
+                                            <a href="static/apk/AdventureOfCheems.apk" class="text-decoration-none" download>
+                                                <img src="static/images/aoc/Download btn.png" class="img-fluid" alt="Download" style="max-width: 220px;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p class="pixel-text text-muted mt-3 mb-0" style="font-size: 8px;">
+                                BY DOWNLOADING, YOU AGREE TO OUR <a href="#" class="text-reset text-decoration-underline">PRIVACY POLICY</a> AND TERMS OF SERVICE.
+                            </p>
+                        </div>
+                        
+                        <form id="newsletter-form" action="https://script.google.com/macros/s/AKfycbxv16HsDbHhbhRCYVHS0D3p7wLUqvYs0Bg14AdP_koxLKsIvy0fmX_64OEB5teLjMcYUA/exec" method="POST" class="mt-5">
+                            <div class="pixel-border p-3">
+                                <h3 class="pixel-text mb-3" style="font-size: 14px;">GET UPDATES</h3>
+                                <div class="row g-3 justify-content-center">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control pixel-text" name="email" placeholder="ENTER EMAIL" required style="font-size: 12px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="pixel-btn w-100 text-white">
+                                            SUBSCRIBE
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="pixel-text mt-3 mb-0" style="font-size: 10px;">GET NOTIFIED ABOUT NEW UPDATES AND SPECIAL EVENTS</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-10 text-center">
+                    <div class="pixel-border p-4">
+                        <div class="row gy-4">
+                            <div class="col-lg-6 text-center">
+                                <p class="pixel-text mb-3" style="font-size: 16px;">DOGBYTE LABS</p>
+                                <div class="mb-4">
+                                    <img src="static/images/aoc/Studio logo.png" class="img-fluid" alt="Dogbyte Labs Logo" style="max-width: 120px;">
+                                </div>
+                                <p class="pixel-text mb-4" style="font-size: 15px;">
+                                    Follow us for updates, Memes, and <br>
+                                    Secret Rewards!
+                                </p>
+                                <div class="d-flex justify-content-center gap-5 mb-20">
+                                    <a href="https://t.me/AOCoffical" target="_blank" class="text-decoration-none">
+                                        <i class="fab fa-telegram fs-4 pixel-text-blue"></i>
+                                    </a>
+                                    <a href="https://twitter.com/dogbytelab" target="_blank" class="text-decoration-none">
+                                        <i class="fab fa-twitter fs-4 pixel-text-blue"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/aoc.offical/" target="_blank" class="text-decoration-none">
+                                        <i class="fab fa-instagram fs-4 pixel-text-red"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pixel-box p-3">
+                                            <p class="pixel-text mb-2" style="font-size: 20px;">CONTACT</p>
+                                            <p class="pixel-text mb-2" style="font-size: 18px;">contactdotaoc@gmail.com</p>
+                                            <a href="mailto:contactdotaoc@gmail.com" class="pixel-btn text-decoration-none text-white py-1 mt-2 d-inline-block" style="font-size: 8px;">
+                                                EMAIL US
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="pixel-text" style="font-size: 8px;">
+                        &copy; 2025 DOGBYTE LABS. ALL RIGHTS RESERVED.<br>
+                        <a href="#" class="text-decoration-none text-muted">PRIVACY</a> | 
+                        <a href="#" class="text-decoration-none text-muted">TERMS</a> | 
+                        <a href="#" class="text-decoration-none text-muted">COOKIES</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Navigation scroll effect
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar scroll effect
+            function initNavbarScroll() {
+                const navbar = document.getElementById('mainNav');
+                if (navbar) {
+                    window.addEventListener('scroll', function() {
+                        if (window.scrollY > 50) {
+                            navbar.classList.add('scrolled');
+                        } else {
+                            navbar.classList.remove('scrolled');
+                        }
+                    });
+                }
+            }
+            
+            // Smooth scrolling for anchor links
+            function initSmoothScroll() {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        if (targetId === '#') return;
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 70,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Update URL without reload
+                            history.pushState(null, null, targetId);
+                        }
+                    });
+                });
+            }
+            
+            // Scroll animations
+            function initScrollAnimations() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animated');
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+                
+                elements.forEach(element => {
+                    observer.observe(element);
+                });
+            }
+            
+            // Mobile navigation
+            function initMobileNav() {
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                
+                if (navbarToggler) {
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', () => {
+                            const navbarCollapse = document.querySelector('.navbar-collapse');
+                            if (navbarCollapse.classList.contains('show')) {
+                                navbarCollapse.classList.remove('show');
+                            }
+                        });
+                    });
+                }
+            }
+            
+            // Initialize all functions
+            initNavbarScroll();
+            initSmoothScroll();
+            initScrollAnimations();
+            initMobileNav();
+            
+            // Newsletter form validation
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('input[name="email"]');
+                    
+                    if (!emailInput.value.trim()) {
+                        showFormError(emailInput, 'Email is required');
+                        return;
+                    }
+                    
+                    if (!isValidEmail(emailInput.value)) {
+                        showFormError(emailInput, 'Please enter a valid email');
+                        return;
+                    }
+                    
+                    // If validation passes, show a success message
+                    alert('Thank you for subscribing to our newsletter!');
+                    this.reset();
+                });
+            }
+            
+            function isValidEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+            
+            function showFormError(inputElement, errorMessage) {
+                const formGroup = inputElement.closest('.form-group');
+                const errorElement = document.createElement('div');
+                errorElement.className = 'invalid-feedback d-block';
+                errorElement.textContent = errorMessage;
+                
+                // Remove any existing error messages
+                const existingError = formGroup.querySelector('.invalid-feedback');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Add the error class and message
+                inputElement.classList.add('is-invalid');
+                formGroup.appendChild(errorElement);
+                
+                // Remove the error after 3 seconds
+                setTimeout(() => {
+                    inputElement.classList.remove('is-invalid');
+                    if (formGroup.contains(errorElement)) {
+                        errorElement.remove();
+                    }
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
